@@ -317,5 +317,49 @@
     "commit" : "37047e837a402cf0efc72fcc8a6e0946b0a00ce1",
     "line" : 31,
     "diffHunk" : "@@ -1,1 +260,264 @@        raise AlreadyExists(\n            detail=f\"DAGRun with DAG ID: '{dag_id}' and \"\n            f\"DAGRun ExecutionDate: '{post_body['execution_date']}' already exists\"\n        )\n"
+  },
+  {
+    "id" : "90abecda-f7a3-4bf2-ba10-8f8e15140faa",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-720838233",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "02af34c3-f0b4-4f97-8187-b1fae4514d10",
+        "parentId" : null,
+        "authorId" : "c7b0cb1c-ff95-4ec9-a0c6-a9f1b5135a52",
+        "body" : "In line 239 above, we queried the DagModel to check if dag exists. I'm thinking that instead of `current_app.dag_bag.get_dag(dag_id).create_dagrun` we should get dag from line 239:\r\n```dag = session.query(DagModel).filter(DagModel.dag_id == dag_id).first()``` and then `dag.create_dagrun`, what do you think?\r\n\r\n\r\n\r\n",
+        "createdAt" : "2021-08-02T19:01:40Z",
+        "updatedAt" : "2021-08-02T19:01:40Z",
+        "lastEditedBy" : "c7b0cb1c-ff95-4ec9-a0c6-a9f1b5135a52",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "c6b18abf-36e2-49e6-be6e-f18cca3b6186",
+        "parentId" : "02af34c3-f0b4-4f97-8187-b1fae4514d10",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "`current_app.dag_bag.get_dag(dag_id)` returns a `DAG`, not a `DagModel`. only `DAG` can call `create_dagrun` (yes it’s a bit confusing, it took a while for me quite a while to sort these out).\r\n\r\nThe new implementation matches more closely to how the Trigger Run web UI is doing.\r\n\r\nhttps://github.com/apache/airflow/blob/ff75cbcac9ec0b1992b4fddd6c160901f23e0c2a/airflow/www/views.py#L1570-L1621",
+        "createdAt" : "2021-08-03T03:07:44Z",
+        "updatedAt" : "2021-08-03T03:07:44Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "7ed8f3a1-89b9-453a-a3a7-6e48c4d0b040",
+        "parentId" : "02af34c3-f0b4-4f97-8187-b1fae4514d10",
+        "authorId" : "c7b0cb1c-ff95-4ec9-a0c6-a9f1b5135a52",
+        "body" : "Oh, nice",
+        "createdAt" : "2021-08-03T06:51:56Z",
+        "updatedAt" : "2021-08-03T06:51:57Z",
+        "lastEditedBy" : "c7b0cb1c-ff95-4ec9-a0c6-a9f1b5135a52",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 35,
+    "diffHunk" : "@@ -1,1 +263,267 @@            external_trigger=True,\n            dag_hash=current_app.dag_bag.dags_hash.get(dag_id),\n        )\n        return dagrun_schema.dump(dag_run)\n"
   }
 ]

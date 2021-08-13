@@ -141,5 +141,38 @@
     "commit" : "b37eb8dfb077739b02aa0a9a19f28bcf59386263",
     "line" : 28,
     "diffHunk" : "@@ -1,1 +428,432 @@                ti.refresh_from_db(lock_for_update=True, session=session)\n\n                task = self.dag.get_task(ti.task_id, include_subdags=True)\n                ti.task = task\n"
+  },
+  {
+    "id" : "20506c26-9c48-46f9-9acc-6ef97ec9c7d6",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718688014",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "0b7a6ab0-eb65-4af7-be64-e9e64200e7f4",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "What do you think about handling this inside `iter_dagrun_infos_between` (similar to what we had earlier in `get_run_dates`) vs not",
+        "createdAt" : "2021-07-29T23:06:29Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "43352c43-6808-4d3d-9708-2483afcab47d",
+        "parentId" : "0b7a6ab0-eb65-4af7-be64-e9e64200e7f4",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "Personally I dislike the pattern “if end if None, default to now” since it’s too implicit, and users (other contributors of Airflow) can accidentally forget to handle a possibly-None input and cause subtle bugs. For example, say there’s a view to return scheduled run dates of a DAG:\r\n\r\n```python\r\n# If the user does not specify, defaults to the DAG’s start_date.\r\nstart_date = request.values.get(\"start_date\")\r\n\r\n# If the user does not specify, defaults to the DAG’s end_date.\r\nend_date = request.values.get(\"end_date\")\r\n\r\n# Oops I forgot to actually check if the user-supplied start_date and end_date is None.\r\n\r\n# Now the runs returned are wrong.\r\nruns = list(dag.iter_dagrun_infos_between(start_date, end_date))\r\n```\r\n\r\nThis can manage to slip through unit tests (if you forgot to do this in code, chances are you wouldn’t remember to test it) and cause either bugs or (worse) incorrect user expectations we need to support for backward compatibility onwards (Hyrum’s law).\r\n\r\nMaking `iter_dagrun_infos_between` accept only datetimes forces the caller to think it through when exactly the iterator should end, which is a good thing since this can potentially run for a *long* time if `earliest` is a long time in the past.\r\n\r\n```python\r\n# Mypy now raises an error here and I’m reminded of the None case.\r\nruns = list(dag.iter_dagrun_infos_between(start_date, end_date))\r\n```",
+        "createdAt" : "2021-07-30T03:17:57Z",
+        "updatedAt" : "2021-07-30T03:17:57Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 90,
+    "diffHunk" : "@@ -1,1 +765,769 @@            dagrun_end_date = pendulum.now(timezone.utc)\n        else:\n            dagrun_end_date = pendulum.instance(self.bf_end_date)\n        dagrun_infos = list(self.dag.iter_dagrun_infos_between(dagrun_start_date, dagrun_end_date))\n        if self.run_backwards:"
   }
 ]

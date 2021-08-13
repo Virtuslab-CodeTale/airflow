@@ -1,0 +1,79 @@
+[
+  {
+    "id" : "67a3facb-7e4e-4746-8f0f-e2386cfb3839",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-668079592",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "b1210186-79b7-461a-91f6-1e7b977197fd",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "In other places we've special cased this sort of path for MySQL https://github.com/apache/airflow/blob/9f7c67feb5f2f8d3eeb81cb5f2bf158fb76f5b9e/airflow/jobs/scheduler_job.py#L785-L859 -- is it worth doing that here too?",
+        "createdAt" : "2021-05-25T11:00:11Z",
+        "updatedAt" : "2021-05-25T11:58:38Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "1b6811f5-9439-4d7c-bafd-24916dc27440",
+        "parentId" : "b1210186-79b7-461a-91f6-1e7b977197fd",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "I don't think so - I very much doubt any query planner is going to be doing better than \"run the subquery and then copy the IDs across\" anyway, we're just adding a little network latency.",
+        "createdAt" : "2021-05-25T16:43:54Z",
+        "updatedAt" : "2021-05-25T16:43:55Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 103,
+    "diffHunk" : "@@ -1,1 +101,105 @@            )\n        ]\n        # ...and delete them (we can't do this in one query due to MySQL)\n        session.query(Trigger).filter(Trigger.id.in_(ids)).delete(synchronize_session=False)\n"
+  },
+  {
+    "id" : "0755c321-08c3-4075-948a-9c922b65eaee",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-668896339",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "5750a7ea-33f1-44d0-ab38-76c8739c6769",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Worth adding a `Log` row for when it gets resumed, like we had for when it gets deferred?",
+        "createdAt" : "2021-05-25T11:01:44Z",
+        "updatedAt" : "2021-05-25T11:58:38Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "b895a1d5-f5ad-4098-a89f-37f760a01d60",
+        "parentId" : "5750a7ea-33f1-44d0-ab38-76c8739c6769",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "Hm, I was leaving it to use the existing \"this task is starting\" logging, but we could add logging saying it was re-scheduled?",
+        "createdAt" : "2021-05-25T16:44:41Z",
+        "updatedAt" : "2021-05-25T16:44:41Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "835d009e-d6a9-4591-80d8-b7980f0da71b",
+        "parentId" : "5750a7ea-33f1-44d0-ab38-76c8739c6769",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "That'll do, so leave it for now and we can think about a wider rebuild/re-work of the audit/tracing framework wholesale at a future time.",
+        "createdAt" : "2021-05-26T11:22:50Z",
+        "updatedAt" : "2021-05-26T11:22:50Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 123,
+    "diffHunk" : "@@ -1,1 +121,125 @@            task_instance.trigger_id = None\n            # Finally, mark it as scheduled so it gets re-queued\n            task_instance.state = State.SCHEDULED\n\n    @classmethod"
+  }
+]

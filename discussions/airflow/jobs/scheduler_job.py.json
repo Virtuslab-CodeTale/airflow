@@ -2110,5 +2110,71 @@
     "commit" : "2c61a52d71a57514d325cd4de9b91d6ea3902cc4",
     "line" : 183,
     "diffHunk" : "@@ -1,1 +985,989 @@            .filter(  # We use `list` here because SQLA doesn't accept a set\n                # We use set to avoid duplicate dag_ids\n                DagRun.dag_id.in_(list({dr.dag_id for dr in dag_runs})),\n                DagRun.state == State.RUNNING,\n            )"
+  },
+  {
+    "id" : "8af981a1-a5f1-4c05-ae5a-84e19ce7d3e8",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-725544795",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "813a5dc2-e2ce-4b57-b2c3-56b5b29ea99d",
+        "parentId" : null,
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "```suggestion\r\n            conf.getfloat('scheduler', 'trigger_timeout_check_interval'),\r\n```\r\n\r\nThis default should be moved into `airflow.config_templates/config.yml` so it gets properly documented everywhere. You then won't need the fallback here because it'll use the value from `default_airflow.cfg`.",
+        "createdAt" : "2021-08-06T19:28:31Z",
+        "updatedAt" : "2021-08-06T20:23:08Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "f4e07869-85c9-417e-a082-3f39ddd3291f",
+        "parentId" : "813a5dc2-e2ce-4b57-b2c3-56b5b29ea99d",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "I moved it into the config YAML, but kept the fallback here so it matches the other conf calls above it.",
+        "createdAt" : "2021-08-09T15:52:03Z",
+        "updatedAt" : "2021-08-09T15:52:03Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 14,
+    "diffHunk" : "@@ -1,1 +701,705 @@\n        timers.call_regular_interval(\n            conf.getfloat('scheduler', 'trigger_timeout_check_interval', fallback=15.0),\n            self.check_trigger_timeouts,\n        )"
+  },
+  {
+    "id" : "68782015-59d7-4c18-81e3-94c23c3711da",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-725496930",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "8bff3f71-04ee-4e5b-936d-48420955fdf7",
+        "parentId" : null,
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "Metrics in general might be worthy of a followup, but if/when that happens this would be a good candidate.",
+        "createdAt" : "2021-08-06T19:30:30Z",
+        "updatedAt" : "2021-08-06T20:23:08Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "2db84e83-801d-4075-a751-665316881547",
+        "parentId" : "8bff3f71-04ee-4e5b-936d-48420955fdf7",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "Agreed. This isn't the last PR for this, just the first and biggest!",
+        "createdAt" : "2021-08-09T15:09:10Z",
+        "updatedAt" : "2021-08-09T15:09:10Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 62,
+    "diffHunk" : "@@ -1,1 +1241,1245 @@        )\n        if num_timed_out_tasks:\n            self.log.info(\"Timed out %i deferred tasks without fired triggers\", num_timed_out_tasks)"
   }
 ]

@@ -1505,5 +1505,49 @@
     "commit" : "4981963b3cfa30104351c7e17c433bfad73a23a3",
     "line" : 6,
     "diffHunk" : "@@ -1,1 +1374,1378 @@    @property\n    def inherits_from_dummy_operator(self):\n        \"\"\"Used to determine if an Operator is inherited from DummyOperator\"\"\"\n        # This looks like `isinstance(self, DummyOperator) would work, but this also\n        # needs to cope when `self` is a Serialized instance of a DummyOperator or one"
+  },
+  {
+    "id" : "e51ee4da-02e2-4054-ae41-e642a1235d3f",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-668894383",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "c3b051a1-31e9-4e21-b606-5e9d0062c921",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Is it worth doing a check for Python <3.7 here and _failing_ the task instead?\r\n\r\n(Rather than going to deferred but not having the trigger ever be able to run?)",
+        "createdAt" : "2021-05-25T10:41:53Z",
+        "updatedAt" : "2021-05-25T11:58:38Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "d3e610b2-f460-4773-8a61-8c0ceeed87ae",
+        "parentId" : "c3b051a1-31e9-4e21-b606-5e9d0062c921",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "I opted against that because I wanted it to be possible to run everything else on 3.6 and the triggerer on 3.7.",
+        "createdAt" : "2021-05-25T16:39:12Z",
+        "updatedAt" : "2021-05-25T16:39:13Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "425f576b-56e2-4657-878e-2f3f83e9adab",
+        "parentId" : "c3b051a1-31e9-4e21-b606-5e9d0062c921",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "👍🏻 ",
+        "createdAt" : "2021-05-26T11:20:26Z",
+        "updatedAt" : "2021-05-26T11:20:26Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 36,
+    "diffHunk" : "@@ -1,1 +1570,1574 @@        which is caught in the main _execute_task wrapper.\n        \"\"\"\n        raise TaskDeferred(trigger=trigger, method_name=method_name, kwargs=kwargs, timeout=timeout)\n\n"
   }
 ]

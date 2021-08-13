@@ -1835,5 +1835,38 @@
     "commit" : "54380915110cd1145d68d4bd50563e863109ed83",
     "line" : 20,
     "diffHunk" : "@@ -1,1 +245,249 @@    __serialized_fields: Optional[FrozenSet[str]] = None\n\n    fileloc: str\n    \"\"\"\n    File path that needs to be imported to load this DAG or subdag."
+  },
+  {
+    "id" : "be2990a7-0fbf-4107-b801-44bc5c52cc03",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718682357",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "60a2ef14-14e2-4fbb-a6f7-7a12bc5eba90",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "We should remove align from docstring\r\n\r\nhttps://github.com/apache/airflow/blob/47908878a96775db49eac49339926c0ccff1e3be/airflow/models/dag.py#L644-L648",
+        "createdAt" : "2021-07-29T22:59:18Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "104169c4-b3e3-4ac5-adfd-04c542f66967",
+        "parentId" : "60a2ef14-14e2-4fbb-a6f7-7a12bc5eba90",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "Thanks for catching this!",
+        "createdAt" : "2021-07-30T03:01:05Z",
+        "updatedAt" : "2021-07-30T03:01:06Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 151,
+    "diffHunk" : "@@ -1,1 +665,669 @@        :param end_date: The end date of the interval. Defaults to ``timezone.utcnow()``.\n        :type end_date: datetime\n        :return: A list of dates within the interval following the dag's schedule.\n        :rtype: list\n        \"\"\""
   }
 ]

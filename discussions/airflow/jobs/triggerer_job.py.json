@@ -1,0 +1,68 @@
+[
+  {
+    "id" : "a48af90b-e506-4fa9-9945-6078ff3432ec",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-668079298",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "b4d5cbde-917d-4000-9ac0-ca53e61dabee",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "This looks like it's prone to a race condition:\r\n\r\nThis code is run from the main thread, and the aio thread could also be mutating this via `cleanup_finished_triggers`.\r\n\r\nNow I'm not familiar with Python's threading access model, but I'd _guess_ this needs a lock to protect access to this variable? ",
+        "createdAt" : "2021-05-25T10:35:13Z",
+        "updatedAt" : "2021-05-25T11:58:38Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "27779530-6d72-430b-af07-9b4cbc4dc987",
+        "parentId" : "b4d5cbde-917d-4000-9ac0-ca53e61dabee",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "It _can_ change while it's iterating through it inside `set()`, but most of `set()` and `.keys()` are down at the C level so the interrupt point here is very small.\r\n\r\nIn addition, it doesn't matter if it mutates during this - the two threads are designed to be run out-of-sync anyway, and for any given key, it has a strict lifecycle where it gets added and then removed and then does not appear again, so for any mutation the subthread can do, it shouldn't cause a problem.\r\n\r\nStill, if a lock would make everyone feel better it's trivial to add!",
+        "createdAt" : "2021-05-25T16:31:49Z",
+        "updatedAt" : "2021-05-25T16:31:49Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "04e5288b-e614-4afb-8376-fc43be24f3b6",
+        "parentId" : "b4d5cbde-917d-4000-9ac0-ca53e61dabee",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "If we can avoid a lock it's more performant to not. Perhaps just a comment somewhere saying this info would do",
+        "createdAt" : "2021-05-25T16:43:37Z",
+        "updatedAt" : "2021-05-25T16:43:47Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 348,
+    "diffHunk" : "@@ -1,1 +346,350 @@        # add -> remove -> never again lifecycle this function is already\n        # handling.\n        current_trigger_ids = set(self.triggers.keys())\n        # Work out the two difference sets\n        new_trigger_ids = requested_trigger_ids.difference(current_trigger_ids)"
+  },
+  {
+    "id" : "d8c6863b-9d5e-454f-b796-d42038b13092",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-727850994",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "0a004e7b-310e-4b8e-808f-471b0a76c509",
+        "parentId" : null,
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "```suggestion\r\n            self.capacity = conf.getint('triggerer', 'default_capacity')\r\n```\r\n\r\n(Eventually I'll start my crusade against `fallback`, but this will mean 1 less when that time comes)",
+        "createdAt" : "2021-08-11T19:16:56Z",
+        "updatedAt" : "2021-08-11T19:20:37Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 55,
+    "diffHunk" : "@@ -1,1 +53,57 @@\n        if capacity is None:\n            self.capacity = conf.getint('triggerer', 'default_capacity', fallback=1000)\n        elif isinstance(capacity, int) and capacity > 0:\n            self.capacity = capacity"
+  }
+]

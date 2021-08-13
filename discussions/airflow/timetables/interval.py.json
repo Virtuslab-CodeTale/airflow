@@ -1,0 +1,57 @@
+[
+  {
+    "id" : "a18e6ed7-93e5-4a04-906b-f29e83f46b7e",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718696191",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "0de306f7-216c-4278-82ff-e1672da75e36",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "(Without thinking about this in much detail) I would have expected such a manually triggered run to be from midnight 25th to 1am 25th.\r\n\r\nBut maybe this way does make more sense. Data intervals aren't (currently) well defined in the case of manual triggers.",
+        "createdAt" : "2021-07-28T14:26:28Z",
+        "updatedAt" : "2021-07-28T14:28:56Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "57a943be-f2d6-485b-a130-d6d88f91c315",
+        "parentId" : "0de306f7-216c-4278-82ff-e1672da75e36",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "What I like about this strategy is we set data interval to a period that always makes sense, instead of some in-between period that doesn’t conform to any DAG scheduling rules. But admittedly I don’t really know what people use manual triggers for (I only use it to check my DAG “can run from start to finish”, for which the data interval doesn’t matter either way since I discard the result anyway) so maybe this is not what they want.",
+        "createdAt" : "2021-07-29T05:42:19Z",
+        "updatedAt" : "2021-07-29T05:45:33Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "e7160807-6d36-46c9-ad0d-4fd33b37df42",
+        "parentId" : "0de306f7-216c-4278-82ff-e1672da75e36",
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "Options:\r\n\r\n(1) Shouldn't the `data_interval_start_date` be 24th 1 am and `data_interval_end_date` be 25th 1am so `data_interval_end_date` = `schedule_data` / `run_date`. Why the offset of 1 hour? ",
+        "createdAt" : "2021-07-30T00:09:11Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "0231877c-8497-4c08-bc96-5c24ed2656b7",
+        "parentId" : "0de306f7-216c-4278-82ff-e1672da75e36",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "If the DAG is scheduled for `0 0 * * *`, data intervals always start and end at midnight for all scheduled (and backfilled) runs, so a manual run should match that IMO. If the interval is `timedelta(days=1)` then yes this manual run’s data interval should be between 1am 24th and 1am 25th. I will modify the docstring to clarify this.",
+        "createdAt" : "2021-07-30T03:44:00Z",
+        "updatedAt" : "2021-07-30T03:46:15Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 16,
+    "diffHunk" : "@@ -1,1 +47,51 @@        # Get the last complete period before run_after, e.g. if a DAG run is\n        # scheduled at each midnight, the data interval of a manually triggered\n        # run at 1am 25th is between 0am 24th and 0am 25th.\n        end = self._schedule.get_prev(self._schedule.align(run_after))\n        return DataInterval(start=self._schedule.get_prev(end), end=end)"
+  }
+]

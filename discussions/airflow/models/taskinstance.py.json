@@ -1010,5 +1010,181 @@
     "commit" : "5dd6848a6ed78cc3a54dd6d56c40b5b6f478bc8b",
     "line" : 16,
     "diffHunk" : "@@ -1,1 +1371,1375 @@                try:\n                    task.on_success_callback(context)\n                except Exception:\n                    self.log.exception(\"Error when executing on_success_callback\")\n        elif self.state == State.UP_FOR_RETRY:"
+  },
+  {
+    "id" : "e4689e5a-3af8-4041-83d7-c55910e2f0ba",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-670061247",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "5b08953a-f4f1-46ad-84fc-1809acd460b1",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "```suggestion\r\n    next_method = Column(String(1000, **COLLATION_ARGS))\r\n```\r\n\r\n(And similarly in the migration too I think?)",
+        "createdAt" : "2021-05-25T10:47:24Z",
+        "updatedAt" : "2021-05-25T11:58:38Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "864e5036-1404-40fe-95d7-a295e9236e8d",
+        "parentId" : "5b08953a-f4f1-46ad-84fc-1809acd460b1",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "Why are there some `Strings()` without `COLLATION_ARGS` then? Looking at it, I presumed they were only for the PKs.",
+        "createdAt" : "2021-05-25T16:41:32Z",
+        "updatedAt" : "2021-05-25T16:41:33Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "0d99f075-ead8-4658-b591-bbdcf1773944",
+        "parentId" : "5b08953a-f4f1-46ad-84fc-1809acd460b1",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Oh could be that then. I have (thankfully) forgotten much about MySQL. It probably doesn't matter here as this will be limited to ASCII chars only, right? (Cos this is a python class/function name)",
+        "createdAt" : "2021-05-26T11:21:49Z",
+        "updatedAt" : "2021-05-26T11:21:49Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "9a0ef099-7a79-4410-81f7-77a6d756d40b",
+        "parentId" : "5b08953a-f4f1-46ad-84fc-1809acd460b1",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "Exactly, I don't think it matters either way, I was just pattern-matching to what was done there already. It might be something to do with indexes?",
+        "createdAt" : "2021-05-26T16:53:15Z",
+        "updatedAt" : "2021-05-26T16:53:16Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "f420e225-570f-4917-8241-a811c0228219",
+        "parentId" : "5b08953a-f4f1-46ad-84fc-1809acd460b1",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Oh yes, likely is that. Something to do with UTF8 3 vs 4 byte chars and maximum size of a index column in MySQL. Not an issue here.",
+        "createdAt" : "2021-05-27T11:27:02Z",
+        "updatedAt" : "2021-05-27T11:27:02Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 64,
+    "diffHunk" : "@@ -1,1 +349,353 @@    # The method to call next, and any extra arguments to pass to it.\n    # Usually used when resuming from DEFERRED.\n    next_method = Column(String(1000))\n    next_kwargs = Column(ExtendedJSON)\n"
+  },
+  {
+    "id" : "15ece20e-87d7-4ffd-bd37-48181dceb29a",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718597427",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "c1de14a0-2c1e-4b3a-a4f7-3c3c056e9f29",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "```suggestion\r\n        dag_run = self.get_dagrun(session=session)\r\n```",
+        "createdAt" : "2021-07-29T23:41:41Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 137,
+    "diffHunk" : "@@ -1,1 +1705,1709 @@        integrate_macros_plugins()\n\n        dag_run = self.get_dagrun()\n\n        # FIXME: Many tests don't create a DagRun. We should fix the tests."
+  },
+  {
+    "id" : "e5f295ba-b796-4c21-af74-4bc8ede02744",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718843447",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "d4c247fc-a3fe-44cc-8d38-46d32f3c4313",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "```suggestion\r\n                run_id=None,\r\n```",
+        "createdAt" : "2021-07-29T23:43:27Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "76aa0333-3d8a-422d-bf7e-c58b231df42d",
+        "parentId" : "d4c247fc-a3fe-44cc-8d38-46d32f3c4313",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "What’s the advantage of None here? IIUC a “real” DagRun cannot have `run_id=None` so I’m using consistent type here in case there’s some function call expecting `str` (of course `run_id` cannot be empty either, but at least the type is correct).",
+        "createdAt" : "2021-07-30T03:20:43Z",
+        "updatedAt" : "2021-07-30T03:20:43Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "0520005a-8b18-480d-aca3-47d47d3d5843",
+        "parentId" : "d4c247fc-a3fe-44cc-8d38-46d32f3c4313",
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "No advantage, was just setting it to default value as it's default is None in ctor",
+        "createdAt" : "2021-07-30T08:19:07Z",
+        "updatedAt" : "2021-07-30T08:19:08Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "945a019a-f9d7-4862-8bab-df1266cfec64",
+        "parentId" : "d4c247fc-a3fe-44cc-8d38-46d32f3c4313",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "Sticking with an empty string for now; we can always change later if None is more advantageous.",
+        "createdAt" : "2021-07-30T08:26:46Z",
+        "updatedAt" : "2021-07-30T08:26:46Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 151,
+    "diffHunk" : "@@ -1,1 +1719,1723 @@                data_interval_end=None,\n                external_trigger=False,\n                run_id=\"\",\n            )\n"
+  },
+  {
+    "id" : "5966b6e9-05f4-4f11-a07b-8e919309f10b",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718689220",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "565cc908-ecf7-4e08-9a1c-2f33ff623306",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "```suggestion\r\n                    \"will be removed in a future version.\"\r\n```",
+        "createdAt" : "2021-07-29T23:44:41Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "e539589e-7168-48b2-9bfb-d6344375c4a2",
+        "parentId" : "565cc908-ecf7-4e08-9a1c-2f33ff623306",
+        "authorId" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "body" : "I like having an extra f here since it aligns the literals :p",
+        "createdAt" : "2021-07-30T03:22:10Z",
+        "updatedAt" : "2021-07-30T03:22:10Z",
+        "lastEditedBy" : "a5092e56-4956-45ec-9914-ecec6b63df73",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 247,
+    "diffHunk" : "@@ -1,1 +1849,1853 @@                message = (\n                    f\"Accessing {key!r} from the template is deprecated and \"\n                    f\"will be removed in a future version.\"\n                )\n                if replacement:"
   }
 ]

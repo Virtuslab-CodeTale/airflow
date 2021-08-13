@@ -31,5 +31,49 @@
     "commit" : "f5b55ee2170a4ffaac461b83e83d9b81f60a3e00",
     "line" : 4,
     "diffHunk" : "@@ -1,1 +116,120 @@\n\nclass AirflowTimetableInvalid(AirflowException):\n    \"\"\"Raise when a DAG has an invalid timetable.\"\"\"\n"
+  },
+  {
+    "id" : "0924e11f-6010-4385-a985-34287c5c1456",
+    "prId" : 15389,
+    "prUrl" : "https://github.com/apache/airflow/pull/15389#pullrequestreview-667990664",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "0b535c66-6373-45da-ae6d-8c3d2cab5558",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "Curious why not `isinstance(self.timeout, datetime.timedelta)`?",
+        "createdAt" : "2021-05-24T22:01:55Z",
+        "updatedAt" : "2021-05-24T22:18:31Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "2991686a-f1c9-4f32-a99f-613e2c2d30dd",
+        "parentId" : "0b535c66-6373-45da-ae6d-8c3d2cab5558",
+        "authorId" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "body" : "I still prefer duck-typing to instance checking because I've been doing Python for Too Long. Happy to change it if you'd prefer!",
+        "createdAt" : "2021-05-24T23:10:22Z",
+        "updatedAt" : "2021-05-24T23:10:22Z",
+        "lastEditedBy" : "b0627d70-f0d9-417d-99a7-c627f10a9dfc",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "89977fe2-2c9f-4241-8631-4aae6adef278",
+        "parentId" : "0b535c66-6373-45da-ae6d-8c3d2cab5558",
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "Should be fine -- was just curious",
+        "createdAt" : "2021-05-25T15:37:37Z",
+        "updatedAt" : "2021-05-25T15:37:38Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "4639624241ff85a1ecaee7deb248e75649b68345",
+    "line" : 37,
+    "diffHunk" : "@@ -1,1 +254,258 @@        # Check timeout type at runtime\n        if self.timeout is not None and not hasattr(self.timeout, \"total_seconds\"):\n            raise ValueError(\"Timeout value must be a timedelta\")\n\n    def __repr__(self) -> str:"
   }
 ]

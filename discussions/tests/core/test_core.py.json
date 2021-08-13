@@ -1,0 +1,24 @@
+[
+  {
+    "id" : "c74a1002-d6c6-4e3f-bddb-b6eb40e903cb",
+    "prId" : 16352,
+    "prUrl" : "https://github.com/apache/airflow/pull/16352#pullrequestreview-718597427",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "88d6206d-f5b4-4a3a-a9df-752bbb0e0068",
+        "parentId" : null,
+        "authorId" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "body" : "Let's add test for deprecated configs too",
+        "createdAt" : "2021-07-30T00:11:56Z",
+        "updatedAt" : "2021-07-30T00:14:09Z",
+        "lastEditedBy" : "c25957e2-1132-4c48-a536-3824307fd862",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "cedffe9181a509a755b1e3cab5479d4fb56be9a0",
+    "line" : 40,
+    "diffHunk" : "@@ -1,1 +294,298 @@\n        assert context['data_interval_start'].isoformat() == '2015-01-01T00:00:00+00:00'\n        assert context['data_interval_end'].isoformat() == '2015-01-02T00:00:00+00:00'\n\n        # Test deprecated fields."
+  }
+]

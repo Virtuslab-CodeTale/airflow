@@ -1,0 +1,24 @@
+[
+  {
+    "id" : "34b362d7-ad27-4397-b35d-f46668ef643b",
+    "prId" : 17451,
+    "prUrl" : "https://github.com/apache/airflow/pull/17451#pullrequestreview-723644460",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "18d1a896-f794-481c-9a89-f98ffd4f9307",
+        "parentId" : null,
+        "authorId" : "db6eb8b7-c895-4f19-9e3d-6fa0535f27e2",
+        "body" : "Doesn't align with the filter name\r\n```suggestion\r\n``ts_no_dash_with_tz``  datetime      As ``ts`` filter without ``-`` or ``:``. Example\r\n```",
+        "createdAt" : "2021-08-05T17:59:10Z",
+        "updatedAt" : "2021-08-05T17:59:18Z",
+        "lastEditedBy" : "db6eb8b7-c895-4f19-9e3d-6fa0535f27e2",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "60efdc9c0b826eec1e2e72cb69c4fc1b96f19d86",
+    "line" : 47,
+    "diffHunk" : "@@ -1,1 +121,125 @@``ts_nodash``          datetime      Same as ``ts`` filter without ``-``, ``:`` or TimeZone info.\n                                     Example: ``20180101T000000``\n``ts_nodash_with_tz``  datetime      As ``ts`` filter without ``-`` or ``:``. Example\n                                     ``20180101T000000+0000``\n=====================  ============  =================================================================="
+  }
+]

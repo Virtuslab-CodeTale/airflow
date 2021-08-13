@@ -108,5 +108,71 @@
     "commit" : "b93db46f744c070c13d48158b45fe1e942ca91e0",
     "line" : 5,
     "diffHunk" : "@@ -1,1 +38,42 @@\n**Apache Airflow Provider versions** (please include all providers that are relevant to your bug):\n\n<!--\n"
+  },
+  {
+    "id" : "9fbe219d-3477-4544-9719-8033db85988b",
+    "prId" : 17561,
+    "prUrl" : "https://github.com/apache/airflow/pull/17561#pullrequestreview-729771779",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "8230304f-b73b-49d0-9539-f7e248b18b58",
+        "parentId" : null,
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "I think we should flip the order of OS and provider versions.",
+        "createdAt" : "2021-08-13T13:50:23Z",
+        "updatedAt" : "2021-08-13T14:09:54Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "a9f08dcc-bac9-4d3c-8b77-da93fceffde2",
+        "parentId" : "8230304f-b73b-49d0-9539-f7e248b18b58",
+        "authorId" : "e8563344-32ea-4c07-9731-a2fed8d2edf2",
+        "body" : "Why? I actually deliberately replaced them, thinking that more often that not the problems will be connected with the OS than provider. When I think about an issue raised it's \r\n\r\n`I am running Airflow on MacOS and I have those providers installed`.  The \"MacOS\" is often much more important which providers are installed. I think providers are important in very small percentage of issues :)",
+        "createdAt" : "2021-08-13T15:54:59Z",
+        "updatedAt" : "2021-08-13T15:55:00Z",
+        "lastEditedBy" : "e8563344-32ea-4c07-9731-a2fed8d2edf2",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "7f56b9ec-9772-4526-84e8-7b5ca2886a80",
+        "parentId" : "8230304f-b73b-49d0-9539-f7e248b18b58",
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "To me it makes sense to have airflow version info and os/deployment info grouped 🤷‍♂️. I'm not picky though.",
+        "createdAt" : "2021-08-13T16:10:23Z",
+        "updatedAt" : "2021-08-13T16:10:23Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "a9aa001a4e33aa775faa1ba20faec1a963902758",
+    "line" : 37,
+    "diffHunk" : "@@ -1,1 +18,22 @@<!-- AIRFLOW VERSION IS MANDATORY -->\n\n**OS**:\n\n<!-- MANDATORY! You can get it via `cat /etc/oss-release` for example -->"
+  },
+  {
+    "id" : "fd7d6f7e-e51e-4a24-9731-9c6643f04b1a",
+    "prId" : 17561,
+    "prUrl" : "https://github.com/apache/airflow/pull/17561#pullrequestreview-729638522",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "e36b66a1-3aac-48d5-8b8d-04f26b9aed2c",
+        "parentId" : null,
+        "authorId" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "body" : "```suggestion\r\nAirflow is a community-managed project and we love to bring new contributors in.\r\nFind us in #airflow-how-to-pr on Slack!\r\n```",
+        "createdAt" : "2021-08-13T14:01:41Z",
+        "updatedAt" : "2021-08-13T14:09:55Z",
+        "lastEditedBy" : "2b57321e-ffa6-49a5-a626-e83c2595de23",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "a9aa001a4e33aa775faa1ba20faec1a963902758",
+    "line" : 112,
+    "diffHunk" : "@@ -1,1 +62,66 @@This is absolutely not required, but we are happy to guide you in contribution process\nespecially if you already have a good understanding of how to implement the fix.\nAirflow is a community-managed project and we love to bring new contributors in.\nFind us in #airflow-how-to-pr on Slack!\n -->"
   }
 ]

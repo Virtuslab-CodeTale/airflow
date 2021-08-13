@@ -1,0 +1,46 @@
+[
+  {
+    "id" : "7c82eeed-7f80-4833-b95f-a2b07f09eeb8",
+    "prId" : 17451,
+    "prUrl" : "https://github.com/apache/airflow/pull/17451#pullrequestreview-724176750",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "883b5ace-06da-49d3-affb-7db5f828a902",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "I decided to rename the page, as it was already talking about more than just the macros, but by adding filters there too it is even more true.",
+        "createdAt" : "2021-08-05T16:01:21Z",
+        "updatedAt" : "2021-08-05T16:01:21Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "93e03e71-362b-4334-81d6-5393edd74f25",
+        "parentId" : "883b5ace-06da-49d3-affb-7db5f828a902",
+        "authorId" : "db6eb8b7-c895-4f19-9e3d-6fa0535f27e2",
+        "body" : "Why not name it something like \"context\" or \"task context\"?",
+        "createdAt" : "2021-08-05T17:55:26Z",
+        "updatedAt" : "2021-08-05T17:59:18Z",
+        "lastEditedBy" : "db6eb8b7-c895-4f19-9e3d-6fa0535f27e2",
+        "tags" : [
+        ]
+      },
+      {
+        "id" : "609faa01-3ccd-4a50-abc9-501d873bba98",
+        "parentId" : "883b5ace-06da-49d3-affb-7db5f828a902",
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Because macros and filters are not anything to do with task context  - only the variables are.",
+        "createdAt" : "2021-08-06T09:35:42Z",
+        "updatedAt" : "2021-08-06T09:35:42Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "60efdc9c0b826eec1e2e72cb69c4fc1b96f19d86",
+    "line" : 5,
+    "diffHunk" : "@@ -1,1 +111,115 @@    Operators and hooks <operators-and-hooks-ref>\n    CLI <cli-and-env-variables-ref>\n    Templates <templates-ref>\n    Python API <python-api-ref>\n    Stable REST API <stable-rest-api-ref>"
+  }
+]

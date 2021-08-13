@@ -1,0 +1,24 @@
+[
+  {
+    "id" : "e71c7df0-cac2-43e1-8059-e5ea8ff8abed",
+    "prId" : 17451,
+    "prUrl" : "https://github.com/apache/airflow/pull/17451#pullrequestreview-723537552",
+    "prSource" : "GitHub",
+    "comments" : [
+      {
+        "id" : "2362604d-c5ae-45a2-8513-25ff7304ff55",
+        "parentId" : null,
+        "authorId" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "body" : "Old url is redirected.",
+        "createdAt" : "2021-08-05T16:01:32Z",
+        "updatedAt" : "2021-08-05T16:01:33Z",
+        "lastEditedBy" : "f73f66ab-2657-4a50-be7a-2ca3ca98c202",
+        "tags" : [
+        ]
+      }
+    ],
+    "commit" : "60efdc9c0b826eec1e2e72cb69c4fc1b96f19d86",
+    "line" : 4,
+    "diffHunk" : "@@ -1,1 +45,49 @@_api/index.rst python-api-ref.rst\nrest-api-ref.rst deprecated-rest-api-ref.rst\nmacros-ref.rst templates-ref.rst\n\n# Concepts"
+  }
+]
